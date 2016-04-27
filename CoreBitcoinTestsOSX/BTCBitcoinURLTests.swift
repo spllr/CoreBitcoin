@@ -20,10 +20,10 @@ class BTCBitcoinURLTests: XCTestCase {
         XCTAssertEqual(bURL.address!.string, "1JwSSubhmg6iPtRjtyqhUYYH7bZg3Lfy1T", "Must parse address")
         XCTAssertNil(bURL.paymentRequestURL, "Must parse payment request")
         XCTAssertEqual(bURL.label!, "Hello world", "Must parse label")
-        XCTAssertEqual(bURL.queryParameters["label"] as! String, "Hello world", "Must provide raw query items access")
-        XCTAssertEqual(bURL.queryParameters["amount"] as! String, "1.23450009", "Must provide raw query items access")
-        XCTAssertEqual(bURL["label"] as! String, "Hello world", "Must provide raw query items access")
-        XCTAssertEqual(bURL["amount"] as! String, "1.23450009", "Must provide raw query items access")
+        XCTAssertEqual(bURL.queryParameters["label"] as? String, "Hello world", "Must provide raw query items access")
+        XCTAssertEqual(bURL.queryParameters["amount"] as? String, "1.23450009", "Must provide raw query items access")
+        XCTAssertEqual(bURL["label"] as? String, "Hello world", "Must provide raw query items access")
+        XCTAssertEqual(bURL["amount"] as? String, "1.23450009", "Must provide raw query items access")
     }
     
     func testCompatiblePaymentRequest() {
@@ -32,7 +32,7 @@ class BTCBitcoinURLTests: XCTestCase {
         XCTAssertTrue(bURL.isValidBitcoinURL, "Must be valid bitcoin url")
         XCTAssertEqual(bURL.amount, 123450009, "Must parse amount formatted as btc")
         XCTAssertEqual(bURL.address!.string, "1JwSSubhmg6iPtRjtyqhUYYH7bZg3Lfy1T", "Must parse address")
-        XCTAssertEqual(bURL.paymentRequestURL!.absoluteString!, "http://example.com/order-1000123", "Must parse payment request")
+        XCTAssertEqual(bURL.paymentRequestURL!.absoluteString, "http://example.com/order-1000123", "Must parse payment request")
     }
     
     func testNakedPaymentRequest() {
@@ -41,7 +41,7 @@ class BTCBitcoinURLTests: XCTestCase {
         XCTAssertTrue(bURL.isValidBitcoinURL, "Must be valid bitcoin url")
         XCTAssertEqual(bURL.amount, 0, "Default amount is zero")
         XCTAssertNil(bURL.address, "Default address is nil")
-        XCTAssertEqual(bURL.paymentRequestURL!.absoluteString!, "http://example.com/order-1000123", "Must parse payment request")
+        XCTAssertEqual(bURL.paymentRequestURL!.absoluteString, "http://example.com/order-1000123", "Must parse payment request")
     }
     
     func testInvalidURL1() {
@@ -50,7 +50,7 @@ class BTCBitcoinURLTests: XCTestCase {
         XCTAssertEqual(bURL.amount, 0, "Default amount is zero")
         XCTAssertNil(bURL.address, "Default address is nil")
         XCTAssertNil(bURL.paymentRequestURL, "Must have nil payment request")
-        XCTAssertEqual(bURL["x"] as! String, "something", "Must have query item")
+        XCTAssertEqual(bURL["x"] as? String, "something", "Must have query item")
     }
     
     func testInvalidURL2() {
@@ -59,7 +59,7 @@ class BTCBitcoinURLTests: XCTestCase {
         XCTAssertEqual(bURL.amount, 120000000, "Must parse amount")
         XCTAssertNil(bURL.address, "Default address is nil")
         XCTAssertNil(bURL.paymentRequestURL, "Must have nil payment request")
-        XCTAssertEqual(bURL["amount"] as! String, "1.2", "Must have query item")
+        XCTAssertEqual(bURL["amount"] as? String, "1.2", "Must have query item")
     }
 
     func testMalformedURL1() {
